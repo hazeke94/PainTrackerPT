@@ -13,12 +13,14 @@ namespace PainTrackerPT.Controllers
 {
     public class AnalyticsLogsController : Controller
     {
-        private readonly PainTrackerPTContext _context;
+        
         private readonly GinyuGateway _gateway;
+        private readonly GFPatientGateway _patientGateway;
 
-        public AnalyticsLogsController(GinyuGateway gateway)
+        public AnalyticsLogsController(GinyuGateway gateway, GFPatientGateway _patient)
         {
             _gateway = gateway;
+            _patientGateway = _patient;
         }
 
         // GET: AnalyticsLogs

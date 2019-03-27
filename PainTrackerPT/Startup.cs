@@ -45,6 +45,7 @@ namespace PainTrackerPT
             
             //Add Analytics Services
             services.AddScoped<IGinyuGateway, GinyuGateway>();
+            services.AddScoped<IGFPatientGateway, GFPatientGateway>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -21,6 +21,13 @@ namespace PainTrackerPT.Models
 
         public DbSet<PainTrackerPT.Models.Analytics.AnalyticsLog> AnalyticsLog { get; set; }
 
+        //Ginyu Force Analytics
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.PainDiary> GFPainDiary { get; set; }
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.Interference> GFInterference { get; set; }
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.Mood> GFMood { get; set; }
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.PainIntensity> GFPainIntensity { get; set; }
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.Sleep> GFSleep { get; set; }
+
         public DbSet<PainTrackerPT.Models.Doctors.DoctorsLog> DoctorsLog { get; set; }
 
         public DbSet<PainTrackerPT.Models.Events.EventsLog> EventsLog { get; set; }
