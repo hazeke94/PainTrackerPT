@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PainTrackerPT.Data.Analytics;
 using PainTrackerPT.Models;
 using PainTrackerPT.Models.Analytics;
 
@@ -13,16 +14,18 @@ namespace PainTrackerPT.Controllers
     public class AnalyticsLogsController : Controller
     {
         private readonly PainTrackerPTContext _context;
+        private readonly GinyuGateway _gateway;
 
-        public AnalyticsLogsController(PainTrackerPTContext context)
+        public AnalyticsLogsController(GinyuGateway gateway)
         {
-            _context = context;
+            _gateway = gateway;
         }
 
         // GET: AnalyticsLogs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AnalyticsLog.ToListAsync());
+            //return View(await _context.AnalyticsLog.ToListAsync());
+            return View(_gateway.SelectAllAsync());
         }
 
         // GET: AnalyticsLogs/Details/5
@@ -33,8 +36,11 @@ namespace PainTrackerPT.Controllers
                 return NotFound();
             }
 
-            var analyticsLog = await _context.AnalyticsLog
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var analyticsLog = await _context.AnalyticsLog
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+
+            var analyticsLog = _gateway.FindAsync(id);
+
             if (analyticsLog == null)
             {
                 return NotFound();
@@ -59,8 +65,10 @@ namespace PainTrackerPT.Controllers
             if (ModelState.IsValid)
             {
                 analyticsLog.Id = Guid.NewGuid();
-                _context.Add(analyticsLog);
-                await _context.SaveChangesAsync();
+                //_context.Add(analyticsLog);
+                //await _context.SaveChangesAsync();
+                _gateway.Insert(analyticsLog);
+                _gateway.Save();
                 return RedirectToAction(nameof(Index));
             }
             return View(analyticsLog);
@@ -74,7 +82,8 @@ namespace PainTrackerPT.Controllers
                 return NotFound();
             }
 
-            var analyticsLog = await _context.AnalyticsLog.FindAsync(id);
+            //var analyticsLog = await _context.AnalyticsLog.FindAsync(id);
+            var analyticsLog = _gateway.FindAsync(id);
             if (analyticsLog == null)
             {
                 return NotFound();
@@ -98,8 +107,9 @@ namespace PainTrackerPT.Controllers
             {
                 try
                 {
-                    _context.Update(analyticsLog);
-                    await _context.SaveChangesAsync();
+                    _gateway.Update(analyticsLog);
+                    _gateway.Save();
+                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -125,8 +135,7 @@ namespace PainTrackerPT.Controllers
                 return NotFound();
             }
 
-            var analyticsLog = await _context.AnalyticsLog
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var analyticsLog = _gateway.FindAsync(id);
             if (analyticsLog == null)
             {
                 return NotFound();
@@ -140,15 +149,16 @@ namespace PainTrackerPT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var analyticsLog = await _context.AnalyticsLog.FindAsync(id);
-            _context.AnalyticsLog.Remove(analyticsLog);
-            await _context.SaveChangesAsync();
+            //var analyticsLog = _gateway.FindAsync(id);
+            //_context.AnalyticsLog.Remove(analyticsLog);
+            _gateway.Delete(id);
+            _gateway.Save();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AnalyticsLogExists(Guid id)
         {
-            return _context.AnalyticsLog.Any(e => e.Id == id);
+            return _gateway.Exist(id);
         }
     }
 }
