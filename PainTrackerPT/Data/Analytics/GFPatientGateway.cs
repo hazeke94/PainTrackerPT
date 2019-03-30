@@ -23,15 +23,13 @@ namespace PainTrackerPT.Data.Analytics
             List<PainIntensity> painIntensityList = new List<PainIntensity>();
 
             //retrieve painDiary based on patient id
-            PainDiary pain = _context.GFPainDiary.Find(id);
+            PainDiary pain = _context.PainDiary.Find(id);
 
             //retrieve all records tied to patient pain diaries
             pain.Interference = retrieveInterferenceById(pain.PainDiaryID);
             pain.Mood = retrieveMoodById(pain.PainDiaryID);
             pain.Sleep = retrieveSleepById(pain.PainDiaryID);
             pain.PainIntensity = retrievePainIntensityById(pain.PainDiaryID);
-            
-            //pain.PainIntensity
 
             return pain;
         }
@@ -39,7 +37,7 @@ namespace PainTrackerPT.Data.Analytics
         public List<Interference> retrieveInterferenceById(int? id)
         {
             List<Interference> list = new List<Interference>();
-            foreach (Interference entry in _context.GFInterference)
+            foreach (Interference entry in _context.Interference)
             {
                 if (entry.PainDiaryID == id)
                 {
@@ -52,7 +50,7 @@ namespace PainTrackerPT.Data.Analytics
         public List<Mood> retrieveMoodById(int? id)
         {
             List<Mood> list = new List<Mood>();
-            foreach (Mood entry in _context.GFMood)
+            foreach (Mood entry in _context.Mood)
             {
                 if (entry.PainDiaryID == id)
                 {
@@ -65,7 +63,7 @@ namespace PainTrackerPT.Data.Analytics
         public List<PainIntensity> retrievePainIntensityById(int? id)
         {
             List<PainIntensity> list = new List<PainIntensity>();
-            foreach (PainIntensity entry in _context.GFPainIntensity)
+            foreach (PainIntensity entry in _context.PainIntensity)
             {
                 if (entry.PainDiaryID == id)
                 {
@@ -78,7 +76,7 @@ namespace PainTrackerPT.Data.Analytics
         public List<Sleep> retrieveSleepById(int? id)
         {
             List<Sleep> list = new List<Sleep>();
-            foreach (Sleep entry in _context.GFSleep)
+            foreach (Sleep entry in _context.Sleep)
             {
                 if (entry.PainDiaryID == id)
                 {

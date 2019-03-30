@@ -17,19 +17,19 @@ namespace PainTrackerPT.Data.Analytics
             _context = context;
         }
 
-        public async Task<IEnumerable<AnalyticsLog>> SelectAllAsync()
+        public IEnumerable<AnalyticsLog> SelectAll()
         {
-            return await _context.AnalyticsLog.ToListAsync();
+            return _context.AnalyticsLog.ToList();
         }
 
-        public async Task<AnalyticsLog> SelectByIdAsync(int? id)
+        public AnalyticsLog SelectById(int? id)
         {
-            return await _context.AnalyticsLog.FindAsync(id);
+            return _context.AnalyticsLog.Find(id);
         }
 
-        public async Task<AnalyticsLog> FindAsync(Guid? id)
+        public AnalyticsLog Find(Guid? id)
         {
-            return await _context.AnalyticsLog.FirstOrDefaultAsync(m => m.Id == id);
+            return  _context.AnalyticsLog.FirstOrDefault(m => m.Id == id);
         }
 
         public void Insert(AnalyticsLog analyticsLog)
@@ -38,9 +38,9 @@ namespace PainTrackerPT.Data.Analytics
 
         }
 
-        public async void Delete(Guid id)
+        public void Delete(Guid id)
         {
-            AnalyticsLog analyticsLog = await _context.AnalyticsLog.FindAsync(id);
+            AnalyticsLog analyticsLog =  _context.AnalyticsLog.Find(id);
             _context.AnalyticsLog.Remove(analyticsLog);
         }
 

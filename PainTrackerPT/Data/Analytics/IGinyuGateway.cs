@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PainTrackerPT.Data.Analytics
 {
-    interface IGinyuGateway
+    public interface IGinyuGateway
     {
         //implement CRUD for Logger
-        Task<IEnumerable<AnalyticsLog>> SelectAllAsync();
-        Task<AnalyticsLog> SelectByIdAsync(int? id);
-        Task<AnalyticsLog> FindAsync(Guid? id);
+        IEnumerable<AnalyticsLog> SelectAll();
+        AnalyticsLog SelectById(int? id);
+        AnalyticsLog Find(Guid? id);
         Boolean Exist(Guid? id);
 
         void Update(AnalyticsLog analyticsLog);

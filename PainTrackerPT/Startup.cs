@@ -39,9 +39,10 @@ namespace PainTrackerPT
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<PainTrackerPTContext>(options =>
-                    //options.UseSqlServer(Configuration.GetConnectionString("PainTrackerPTContext")));
+                    options.UseSqlServer(("PainTrackerPTContext")));
+
                     // Just for testing use the in memory database but in real testing, create  your own one.
-                    options.UseInMemoryDatabase("PainTrackerPTContext"));
+                    //options.UseInMemoryDatabase("PainTrackerPTContext"));
             
             //Add Analytics Services
             services.AddScoped<IGinyuGateway, GinyuGateway>();
@@ -70,7 +71,7 @@ namespace PainTrackerPT
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=AnalyticsLogs}/{action=Index}/{id?}");
             });
         }
     }

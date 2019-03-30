@@ -14,10 +14,10 @@ namespace PainTrackerPT.Controllers
     public class AnalyticsLogsController : Controller
     {
         
-        private readonly GinyuGateway _gateway;
-        private readonly GFPatientGateway _patientGateway;
+        private readonly IGinyuGateway _gateway;
+        private readonly IGFPatientGateway _patientGateway;
 
-        public AnalyticsLogsController(GinyuGateway gateway, GFPatientGateway _patient)
+        public AnalyticsLogsController(IGinyuGateway gateway, IGFPatientGateway _patient)
         {
             _gateway = gateway;
             _patientGateway = _patient;
@@ -26,8 +26,9 @@ namespace PainTrackerPT.Controllers
         // GET: AnalyticsLogs
         public async Task<IActionResult> Index()
         {
-            //return View(await _context.AnalyticsLog.ToListAsync());
-            return View(_gateway.SelectAllAsync());
+            //Currently Retrieving a specific user information for testing    
+            //return View(_gateway.SelectAll());
+            return View(_patientGateway.SelectById(1));
         }
 
         // GET: AnalyticsLogs/Details/5
@@ -38,10 +39,7 @@ namespace PainTrackerPT.Controllers
                 return NotFound();
             }
 
-            //var analyticsLog = await _context.AnalyticsLog
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-
-            var analyticsLog = _gateway.FindAsync(id);
+            var analyticsLog = _gateway.Find(id);
 
             if (analyticsLog == null)
             {
@@ -67,8 +65,7 @@ namespace PainTrackerPT.Controllers
             if (ModelState.IsValid)
             {
                 analyticsLog.Id = Guid.NewGuid();
-                //_context.Add(analyticsLog);
-                //await _context.SaveChangesAsync();
+                
                 _gateway.Insert(analyticsLog);
                 _gateway.Save();
                 return RedirectToAction(nameof(Index));
@@ -83,9 +80,8 @@ namespace PainTrackerPT.Controllers
             {
                 return NotFound();
             }
-
-            //var analyticsLog = await _context.AnalyticsLog.FindAsync(id);
-            var analyticsLog = _gateway.FindAsync(id);
+           
+            var analyticsLog = _gateway.Find(id);
             if (analyticsLog == null)
             {
                 return NotFound();
@@ -111,7 +107,7 @@ namespace PainTrackerPT.Controllers
                 {
                     _gateway.Update(analyticsLog);
                     _gateway.Save();
-                    //await _context.SaveChangesAsync();
+                   
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -137,7 +133,7 @@ namespace PainTrackerPT.Controllers
                 return NotFound();
             }
 
-            var analyticsLog = _gateway.FindAsync(id);
+            var analyticsLog = _gateway.Find(id);
             if (analyticsLog == null)
             {
                 return NotFound();
@@ -150,9 +146,7 @@ namespace PainTrackerPT.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            //var analyticsLog = _gateway.FindAsync(id);
-            //_context.AnalyticsLog.Remove(analyticsLog);
+        {            
             _gateway.Delete(id);
             _gateway.Save();
             return RedirectToAction(nameof(Index));

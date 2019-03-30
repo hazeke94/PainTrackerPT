@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PainTrackerPT.Data.Analytics
 {
-    interface IGFPatientGateway
+    public interface IGFPatientGateway
     {
         PainDiary SelectById(int? id);
         List<Interference> retrieveInterferenceById(int? id);

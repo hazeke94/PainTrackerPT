@@ -9,8 +9,16 @@ namespace PainTrackerPT.Models.Analytics.GFPatient
 {
     public class Mood
     {
+        [Key]
+        public int id { get; set; }
+
+        [Column("Date")]
         public DateTime date;
+
+        [Column("MoodType")]
         public int moodType { get; set; }
+
+        [Column("Duration")]
         public int duration { get; set; }
 
         [ForeignKey("PainDiary")]

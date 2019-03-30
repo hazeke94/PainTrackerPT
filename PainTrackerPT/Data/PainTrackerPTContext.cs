@@ -18,15 +18,22 @@ namespace PainTrackerPT.Models
             : base(options)
         {
         }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=PainTrackerPTContext-b0b2ee36-cc0a-4b14-ac34-368168252e49;Trusted_Connection=True;MultipleActiveResultSets=true");
+           /* if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=PainTrackerPTContext-b0b2ee36-cc0a-4b14-ac34-368168252e49;Trusted_Connection=True;MultipleActiveResultSets=true");
+            }*/
+        }
         public DbSet<PainTrackerPT.Models.Analytics.AnalyticsLog> AnalyticsLog { get; set; }
 
         //Ginyu Force Analytics
-        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.PainDiary> GFPainDiary { get; set; }
-        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.Interference> GFInterference { get; set; }
-        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.Mood> GFMood { get; set; }
-        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.PainIntensity> GFPainIntensity { get; set; }
-        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.Sleep> GFSleep { get; set; }
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.PainDiary> PainDiary { get; set; }
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.Interference> Interference { get; set; }
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.Mood> Mood { get; set; }
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.PainIntensity> PainIntensity { get; set; }
+        public DbSet<PainTrackerPT.Models.Analytics.GFPatient.Sleep> Sleep { get; set; }
 
         public DbSet<PainTrackerPT.Models.Doctors.DoctorsLog> DoctorsLog { get; set; }
 
